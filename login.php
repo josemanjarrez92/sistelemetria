@@ -67,7 +67,6 @@
     <![endif]-->
   </head>
   <body>
-  <?php $eso = getenv('OPENSHIFT_MYSQL_DB_HOST'); echo $eso; ?>
   <div class="container-fluid">
   <div class="jumbotron">
   <h1>¡Bienvenido!</h1>
