@@ -2,7 +2,6 @@
   include 'includes/configuracion.php';
   session_start();
     if(isset($_POST['continuar'])){
-	  $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema );
 	  if (mysqli_connect_errno()) {
 	      printf("Connect failed: %s\n", mysqli_connect_error());
 	      exit();

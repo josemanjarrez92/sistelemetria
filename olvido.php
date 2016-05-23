@@ -3,7 +3,6 @@
   if (isset($_SESSION['correo'])){session_destroy();}
   session_start();
     if(isset($_POST['enviar'])){
-	  $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema );
 	  if (mysqli_connect_errno()) {
 	      printf("Connect failed: %s\n", mysqli_connect_error());
 	      exit();
