@@ -1,7 +1,6 @@
 <?php
 function select_sensor($num_sensor){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$sentencia="SELECT idtipo, tipo_nombre FROM tipos";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
 	mysqli_stmt_execute($stmt);
@@ -28,7 +27,6 @@ function select_sensor($num_sensor){
   }
   function iconos($idtipo){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$sentencia="SELECT tipo_icono FROM tipos WHERE idtipo=".$idtipo."";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
 	mysqli_stmt_execute($stmt);
@@ -54,7 +52,6 @@ function select_sensor($num_sensor){
   }
   function getId($correo){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$sentencia="SELECT idusuario FROM usuarios WHERE correo='".$correo."'";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
 	mysqli_stmt_execute($stmt);
@@ -67,7 +64,6 @@ function select_sensor($num_sensor){
   }
   function guardarlocacion($correo,$locacion,$numsens){
   include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$idusuario = getId($correo);
 	$sentencia="INSERT INTO locaciones (loc_idusuario,loc_numsens,loc_nombre) VALUES(".$idusuario.",".$numsens.",'".$locacion."')";
 	$res = mysqli_query($mysqli,$sentencia);
@@ -87,7 +83,6 @@ function select_sensor($num_sensor){
   }
   function guardarsensores($locacion,$correo,$sensores){
   include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$idusuario = getId($correo);
 	$counter = count($sensores);
 	$actualiza="UPDATE locaciones SET loc_numsens=".$counter." WHERE idloc=".$locacion."";
@@ -101,7 +96,6 @@ function select_sensor($num_sensor){
   }
   function getUserPhoto($correo){
   	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$sentencia="SELECT foto FROM usuarios WHERE correo='".$correo."'";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
 	mysqli_stmt_execute($stmt);
@@ -116,7 +110,6 @@ function select_sensor($num_sensor){
   }
   function getUserName($correo){
     	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$sentencia="SELECT nombre,apellido FROM usuarios WHERE correo='".$correo."'";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
 	mysqli_stmt_execute($stmt);
@@ -130,7 +123,6 @@ function select_sensor($num_sensor){
   }
   function getLocations($idusuario){
     	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$sentencia="SELECT idloc,loc_nombre,loc_numsens FROM locaciones WHERE loc_idusuario=".$idusuario."";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
 	mysqli_stmt_execute($stmt);
@@ -152,7 +144,6 @@ function select_sensor($num_sensor){
 }
   function getSensors($idloc){
     	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$sentencia="SELECT idsens, sens_idtipo,tipo_nombre FROM sensores, tipos WHERE sens_idloc=".$idloc." AND sens_idtipo = idtipo";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
 	mysqli_stmt_execute($stmt);
@@ -174,7 +165,6 @@ function select_sensor($num_sensor){
 }
 function showLocations($correo){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$idusuario = getId($correo);
 	list($idlocs,$locaciones,$numsens)=getLocations($idusuario);
 	$j = count($idlocs);
@@ -203,7 +193,6 @@ function showLocations($correo){
 }
 function getLastSensorRegister($idsensor){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$sentencia="SELECT reg_valor,reg_fechahora FROM registros WHERE reg_idsens=".$idsensor." ORDER BY idreg DESC LIMIT 1";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
 	mysqli_stmt_execute($stmt);
@@ -220,7 +209,6 @@ function getLastSensorRegister($idsensor){
 }
 function showUserLocations($correo){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$idusuario = getId($correo);
 	list($idlocs,$locaciones,$numsens)=getLocations($idusuario);
 	$j = count($idlocs);
@@ -267,7 +255,6 @@ function showUserLocations($correo){
 }
  function UpdatePhoto($foto,$correo){
   include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$idusuario = getId($correo);
 	$actualiza="UPDATE usuarios SET foto='".$foto."' WHERE correo='".$correo."'";
 	$res = mysqli_query($mysqli,$actualiza);
@@ -276,7 +263,6 @@ function showUserLocations($correo){
   }
   function countNotifications($correo){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$idusuario = getId($correo);
 	$sentencia = "SELECT COUNT(idnot) from notificaciones WHERE not_idususario = ".$idusuario."";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
@@ -294,7 +280,6 @@ function showUserLocations($correo){
   }
   function showNotifications($correo){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$idusuario=getId($correo);
 	$sentencia="SELECT idnot,loc_nombre,tipo_nombre,not_umbral FROM `notificaciones`,locaciones,tipos,sensores WHERE loc_idusuario = ".$idusuario." AND idloc = sens_idloc AND sens_idtipo = idtipo AND not_idsens = idsens";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
@@ -327,7 +312,6 @@ function showUserLocations($correo){
 
   function select_locations($correo){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$idusuario=getId($correo);
 	$sentencia = "SELECT idloc, loc_nombre from locaciones WHERE loc_idusuario = ".$idusuario."";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
@@ -351,7 +335,6 @@ function showUserLocations($correo){
   }
      function select_loc_sensors($idloc){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$idusuario=getId($correo);
 	$sentencia = "SELECT idsens, tipo_nombre from sensores,tipos WHERE sens_idloc = ".$idloc." AND idtipo=sens_idtipo";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
@@ -371,7 +354,6 @@ function showUserLocations($correo){
 
   function saveNotification($idsen,$correo,$umbral){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$idusuario=getId($correo);
 	$sentencia = "INSERT INTO notificaciones (not_idsens,not_idusuario,not_umbral) VALUES(".$idsen.",".$idusuario.",".$umbral.")";
 	$res = mysqli_query($mysqli,$sentencia);
@@ -382,7 +364,6 @@ function showUserLocations($correo){
   }
   function deleteNotification($idnot){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$sentencia = "DELETE from notificaciones WHERE idnot = ".$idnot."";
 	$res = mysqli_query($mysqli,$sentencia);
 	if (!$res) {
@@ -392,7 +373,6 @@ function showUserLocations($correo){
   }
   function getSensorRegisters($idsensor,$desde,$hasta){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	$sentencia="SELECT reg_valor,reg_fechahora, YEAR(reg_fechahora) , MONTH(reg_fechahora) , DAY(reg_fechahora) , HOUR(reg_fechahora) , MINUTE(reg_fechahora) FROM registros WHERE reg_idsens=".$idsensor." AND reg_fechahora BETWEEN '".$desde."' AND '".$hasta."' ORDER BY reg_fechahora ASC";
 	$stmt = mysqli_prepare($mysqli,$sentencia);
 	mysqli_stmt_execute($stmt);
@@ -430,7 +410,6 @@ function unidades($idtipo){
 }
   function showHistory($idloc,$desde,$hasta){
 	include 'includes/configuracion.php';
-	$mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
 	list($idsens,$idtipos, $sensores) = getSensors($idloc);
 	$k = count($idsens);
 	if ($k>0){ ?>

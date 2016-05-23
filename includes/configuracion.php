@@ -1,7 +1,9 @@
 <?php
-  $db_host=getenv('OPENSHIFT_MYSQL_DB_PORT');
-  $db_user='admin4zRpBek';
-  $db_password='i5GRBfq1eHJR';
-  $db_schema='sistelemetria';
-  $db_port=getenv('OPENSHIFT_MYSQL_DB_PORT');
+$mysqli = mysqli_connect(
+    getenv('OPENSHIFT_MYSQL_DB_HOST'), 
+    getenv('OPENSHIFT_MYSQL_DB_USERNAME'), 
+    getenv('OPENSHIFT_MYSQL_DB_HOST'), 
+    getenv('OPENSHIFT_MYSQL_DB_PASSWORD'),
+    getenv('OPENSHIFT_MYSQL_DB_PORT')
+);
 ?>
