@@ -1,9 +1,9 @@
 <?php
 $mysqli = mysqli_connect(
-    getenv('OPENSHIFT_MYSQL_DB_HOST'), 
-    'admin4zRpBek', 
-    'sistelemetria', 
+    '127.2.211.130', 
+    'admin4zRpBek',
     'i5GRBfq1eHJR',
-    getenv('OPENSHIFT_MYSQL_DB_PORT')
+    'sistelemetria', 
+    '3306'
 );
 ?>
