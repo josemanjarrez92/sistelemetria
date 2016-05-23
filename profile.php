@@ -1,9 +1,12 @@
-<?php session_start();
+<?php 
+  session_start();
   include 'includes/configuracion.php';
   include 'includes/mixedup.php';
   if(!isset($_SESSION['correo'])){ header('Location: login.php');}
   if(isset($_POST['out'])){session_destroy();header('Location: login.php');}
-?>
+  if(isset($_POST['subida'])){$uploadfile = '_photos/'.basename($_FILES['userfile']['name']);$subio = move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);}
+  if($subio){$foto = basename($_FILES['userfile']['name']); $fotoflag=UpdatePhoto($foto,$_SESSION['correo']);}else{echo $_FILES['userfile']['error'];}
+  ?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -11,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Inicio - SisTelemetria</title>
+    <title>Perfil</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -23,6 +26,41 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
+      var fotoflag = <?php echo $fotoflag; ?>
+      if(fotoflag){
+	alert("La subida ha sido exitosa.");
+      }
+      function checkForm(form)
+      {
+	re = /^\w+$/;
+	if(!re.test(form.nombre.value) && !re.test(form.apellido.value)) {
+	  alert("Error: Nombre y Apellido solo puede contener letras!");
+	  form.nombre.focus();
+	  return false;
+	}
+
+	if(form.pwd1.value != "" && form.pwd1.value == form.pwd2.value) {
+	  if(form.pwd1.value.length < 6) {
+	    alert("Error: La contrasena debe tener al menos 6 caracteres!");
+	    form.pwd1.focus();
+	    return false;
+	  }
+	  if((form.pwd1.value == form.nombre.value) || (form.pwd1.value == form.apellido.value)) {
+	    alert("Error: Contrasena debe ser diferente de nombre o apellido!");
+	    form.pwd1.focus();
+	    return false;
+	  }
+	} else {
+	  alert("Error: Por favor, verifique que ha tecleado una contrasena!");
+	  form.pwd1.focus();
+	  return false;
+	}
+
+    //   alert("You entered a valid password: " + form.pwd1.value);
+	return true;
+      }
+
+
     function post(path, parameters) {
         var form = $('<form></form>');
 
@@ -70,7 +108,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	<ul class="nav navbar-nav">
-	  <li class="active"><a href="#"><b>Inicio</b><span class="sr-only">(current)</span></a></li>
+	  <li><a href="index.php"><b>Inicio</b></a></li>
 	  <li><a href="history.php"><b>Consultar Historiales</b></a></li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
@@ -90,19 +128,45 @@
     </div><!-- /.container-fluid -->
   </nav>
     <div class="container-fluid">
-    <div class="jumbotron">
-    <center><h1>Bienvenido(a), <?php echo getUserName($_SESSION['correo']);?></h1></center>
-    <h4>A continuación encontrarás la lista de las ubicaciones que has inscrito.
-    Dándole click a cada nombre aparecerá la información más reciente de sus respectivos sensores.
-    Recuerda que en la barra superior puedes consultar los historiales de tus sensores,
-    añadir ubicaciones y/o sensores, o configurar las notificaciones por correo</h4>
-    </div>
+  <div class="jumbotron">
+  <h1>Edición de Perfil</h1>
+  <p>Realiza los cambios que consideres necesarios en tu perfil y luego clickea en "Guardar".</p>
+  </div><!-- jumbotron -->
     <div class="row">
-      <div class="col-xs-8 col-xs-offset-2">
-	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-	  <?php showUserLocations($_SESSION['correo']); ?>
-	</div><!-- accordion-->
+      
+      <div class="col-xs-6 col-xs-offset-3">
+      <form action="profile.php" method="POST" onsubmit="return checkForm(this);">
+      <div class="form-group">
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $_SESSION['nombre'];?>" required>
+    
+    <label for="apellido">Apellido</label>
+    <input type="text" id="apellido" name="apellido" class="form-control" value="<?php echo $_SESSION['apellido'];?>" required>
+    
+    <label for="inputEmail" >Correo Electrónico</label>
+    <input type="email" id="inputEmail" name="inputEmail" class="form-control" value="<?php echo $_SESSION['correo'];?>" required>
+    </div>    
+    <br>
+    <button class="btn btn-lg btn-info btn-block" name="Guardar" type="submit">Continuar</button>
+    </form>
+    <br><br><br>
+    <form enctype="multipart/form-data" action="profile.php" method="POST">
+    <div class="form-group">
+    <!-- MAX_FILE_SIZE must precede the file input field -->
+    <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
+    <!-- Name of input element determines name in $_FILES array -->
+    <label for="userfile" >Subir foto</label>:
+    <input id="userfile" name="userfile" type="file"/><br>
+    <input type="submit" name="subida" class="btn btn-warning" value="Subir" />
+     <p class="help-block">Tamaño máximo del archivo de 2MB.</p>
+    </div>
+    <div class="thumbnail">
+    <img src="<?php echo getUserPhoto($_SESSION['correo']);?>" />
+    </div>
+    </form>
+ 
       </div><!-- col-sm-6-->
+  
     </div><!-- row-->
     </div><!--container-fluid-->
     
