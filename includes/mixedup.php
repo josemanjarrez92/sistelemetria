@@ -239,7 +239,7 @@ function showUserLocations($correo){
 		      <?php
 		    }
 		    else{
-		      echo $valor.' '.unidades($idtipos[$k]);
+		      if($valor==0){echo 'Sensor dañado';}else{echo $valor.' '.unidades($idtipos[$k]);}
 		      echo "<h4>Obtenido: ".$fechahora."</h4>";
 		    }
 		    ?></h3><?php
