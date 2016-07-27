@@ -132,7 +132,7 @@
 	    <?php if(isset($_SESSION['idloc'])){?>
 		  <form id="select_idsen" method="POST" action="notifications.php">Elige Sensor: <?php select_loc_sensors($_SESSION['idloc']); ?><input type="hidden" name="action" value="1" /></form>
 		  <?php if(isset($_SESSION['idsen'])){?>
-		    <input id="umbral" type="number" name="umbral" min="1" max="100">
+		    Especifique el umbral a partir del cual se generarán reportes si la variable elegida supera este valor: <input id="umbral" type="number" name="umbral" min="1" max="100">
 		    <button class='btn btn-info' onclick="GuardarNot()" data-toggle="tooltip" title="Guardar"><span class='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span></button>
 		  <?php }
 		} 
