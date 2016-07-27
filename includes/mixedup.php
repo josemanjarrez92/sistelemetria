@@ -462,7 +462,7 @@ function unidades($idtipo){
 		  chart.draw(data, options);
 		}
 		</script>
-
+		<div id='sensor<?php echo $idsens[$i]; ?>'</div>
 	      <?php } ?>
 	      </div>
 	      </div>
