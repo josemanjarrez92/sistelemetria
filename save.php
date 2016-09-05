@@ -50,6 +50,7 @@ function getflag($idsens){
   mysqli_stmt_fetch($stmt);
   mysqli_stmt_close($stmt);     
   mysqli_close($mysqli);
+  echo "aja";
   return $flag;
 }
 function setflag($idsens,$valor){
