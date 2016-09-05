@@ -30,13 +30,11 @@ function getTarget($idsens){
   $sentencia="SELECT acc_hora FROM acciones WHERE acc_idsens=".$idsens."";
   $stmt = mysqli_prepare($mysqli,$sentencia);
   mysqli_stmt_execute($stmt);
-  printf("Error: %s.\n", mysqli_stmt_error($stmt));
   mysqli_stmt_store_result($stmt);
-  mysqli_stmt_bind_result($stmt,$target);
+  mysqli_stmt_bind_result($stmt,$tar);
   mysqli_stmt_fetch($stmt);
-  
-  $do = empty($target);
-  return [$do, $target];
+  $do = empty($tar);
+  return [$do, $tar];
   mysqli_stmt_close($stmt);     
   mysqli_close($mysqli);
 }
