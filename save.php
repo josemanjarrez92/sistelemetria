@@ -35,6 +35,7 @@ function getTarget($idsens){
   mysqli_stmt_fetch($stmt);
   mysqli_stmt_close($stmt);     
   mysqli_close($mysqli);
+  echo $sentencia.' y luego',$target;
   $do = empty($target);
   return [$do, $target];
 }
