@@ -27,7 +27,7 @@
 function getTarget($idsens){
   include 'includes/configuracion.php';
   $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
-  $sentencia="SELECT acc_hora FROM acciones WHERE acc_idsens=".$idsens."";
+  $sentencia="SELECT * FROM acciones WHERE acc_idsens=".$idsens."";
   //$stmt = mysqli_prepare($mysqli,$sentencia);
   //mysqli_stmt_execute($stmt);
  // mysqli_stmt_store_result($stmt);
