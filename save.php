@@ -28,16 +28,17 @@ function getTarget($idsens){
   include 'includes/configuracion.php';
   $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
   $sentencia="SELECT acc_hora FROM acciones WHERE acc_idsens=".$idsens."";
-  $stmt = mysqli_prepare($mysqli,$sentencia);
-  mysqli_stmt_execute($stmt);
-  mysqli_stmt_store_result($stmt);
-  mysqli_stmt_bind_result($stmt,$target);
-  if(mysqli_stmt_fetch($stmt)){
+  //$stmt = mysqli_prepare($mysqli,$sentencia);
+  //mysqli_stmt_execute($stmt);
+ // mysqli_stmt_store_result($stmt);
+ // mysqli_stmt_bind_result($stmt,$target);
+   $target = mysqli_fetch_assoc(mysqli_query($mysqli,$sentencia));
+  if(target){
   echo $sentencia.' y luego '.$target;
   $do = empty($target);
   return [$do, $target];
   }
-  mysqli_stmt_close($stmt);     
+  //mysqli_stmt_close($stmt);     
   mysqli_close($mysqli);
 }
 function getflag($idsens){
