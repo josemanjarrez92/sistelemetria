@@ -35,8 +35,8 @@ function getTarget($idsens){
    $target = mysqli_fetch_assoc(mysqli_query($mysqli,$sentencia));
   if(target){
   echo $sentencia.' y luego '.$target;
-  $do = empty($target);
-  return [$do, $target];
+  //$do = empty($target);
+  return [true, $target];
   }
   //mysqli_stmt_close($stmt);     
   mysqli_close($mysqli);
