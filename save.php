@@ -19,7 +19,7 @@
 	  $res = mysqli_query($mysqli,$sentencia);
 	  $now = strftime("%H", time());
 	  $target = getTarget($_GET['idsens']);
-	  if(!$target[0]){if($now==$target[1]){$flag=getflag($_GET['idsens']);if($flag==0){echo "HIGH";setflag($_GET['idsens'],1);}else{echo "Already done";}}else{setflag($_GET['idsens'],1);echo "Not same hour";}}else{echo "No target";}
+	  if(!$target[0]){if($now==$target[1]){$flag=getflag($_GET['idsens']);if($flag==0){echo "HIGH";setflag($_GET['idsens'],1);}else{echo "FALSE";}}else{setflag($_GET['idsens'],1);echo "FALSE";}}else{echo "FALSE";}
 	  }
     }
   }
