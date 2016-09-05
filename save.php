@@ -18,7 +18,7 @@
 	  mysqli_query($mysqli,"SET SESSION time_zone = '-5:00'"); 
 	  $res = mysqli_query($mysqli,$sentencia);
 	  $now = strftime("%H", time());
-	  $target = getflag($_GET['idsens']);
+	  $target = setflag($_GET['idsens'],1);
 	  echo $target;
 	  print_r(array_values($target));
 	  if(!$target[0]){if($now==$target[1]){$flag=getflag($_GET['idsens']);if($flag==0){echo "HIGH";setflag($_GET['idsens'],1);}else{echo "Already done";}}else{setflag($_GET['idsens'],1);echo "Not same hour";}}else{echo "No target";}
@@ -50,7 +50,6 @@ function getflag($idsens){
   mysqli_stmt_fetch($stmt);
   mysqli_stmt_close($stmt);     
   mysqli_close($mysqli);
-  echo "aja";
   return $flag;
 }
 function setflag($idsens,$valor){
