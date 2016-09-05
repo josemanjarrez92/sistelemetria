@@ -33,11 +33,11 @@ function getTarget($idsens){
   mysqli_stmt_store_result($stmt);
   mysqli_stmt_bind_result($stmt,$target);
   mysqli_stmt_fetch($stmt);
-  mysqli_stmt_close($stmt);     
-  mysqli_close($mysqli);
-  echo $sentencia.' y luego',$target;
+  echo $sentencia.' y luego '.$target;
   $do = empty($target);
   return [$do, $target];
+  mysqli_stmt_close($stmt);     
+  mysqli_close($mysqli);
 }
 function getflag($idsens){
   include 'includes/configuracion.php';
