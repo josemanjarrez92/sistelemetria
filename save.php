@@ -18,8 +18,7 @@
 	  mysqli_query($mysqli,"SET SESSION time_zone = '-5:00'"); 
 	  $res = mysqli_query($mysqli,$sentencia);
 	  $now = strftime("%H", time());
-	  $target = setflag($_GET['idsens'],1);
-	  echo $target;
+	  $target = getTarget($_GET['idsens']);
 	  print_r(array_values($target));
 	  if(!$target[0]){if($now==$target[1]){$flag=getflag($_GET['idsens']);if($flag==0){echo "HIGH";setflag($_GET['idsens'],1);}else{echo "Already done";}}else{setflag($_GET['idsens'],1);echo "Not same hour";}}else{echo "No target";}
 	  }
@@ -27,21 +26,17 @@
   }
 function getTarget($idsens){
   include 'includes/configuracion.php';
-  $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
   $sentencia="SELECT acc_hora FROM acciones WHERE acc_idsens=".$idsens."";
   $stmt = mysqli_prepare($mysqli,$sentencia);
   mysqli_stmt_execute($stmt);
   mysqli_stmt_store_result($stmt);
-  mysqli_stmt_bind_result($stmt,$tar);
+  mysqli_stmt_bind_result($stmt,$target);
   mysqli_stmt_fetch($stmt);
-  $do = empty($tar);
-  return [$do, $tar];
   mysqli_stmt_close($stmt);     
   mysqli_close($mysqli);
 }
 function getflag($idsens){
   include 'includes/configuracion.php';
-  $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
   $sentencia="SELECT acc_flag FROM acciones WHERE acc_idsens=".$idsens."";
   $stmt = mysqli_prepare($mysqli,$sentencia);
   mysqli_stmt_execute($stmt);
@@ -54,7 +49,6 @@ function getflag($idsens){
 }
 function setflag($idsens,$valor){
   include 'includes/configuracion.php';
-  $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
   $sentencia="UPDATE acciones SET acc_flag=".$valor." WHERE acc_idsens=".$idsens."";
   $res = mysqli_query($mysqli,$sentencia);
 }
