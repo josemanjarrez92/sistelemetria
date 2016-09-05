@@ -27,18 +27,16 @@
 function getTarget($idsens){
   include 'includes/configuracion.php';
   $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
-  $sentencia="SELECT sens_idloc FROM sensores WHERE idsens=".$idsens."";
-  //$stmt = mysqli_prepare($mysqli,$sentencia);
-  //mysqli_stmt_execute($stmt);
- // mysqli_stmt_store_result($stmt);
- // mysqli_stmt_bind_result($stmt,$target);
-   $target = mysqli_fetch_assoc(mysqli_query($mysqli,$sentencia));
-  if(target){
-  echo $sentencia.' y luego '.$target;
-  //$do = empty($target);
-  return [true, $target];
-  }
-  //mysqli_stmt_close($stmt);     
+  $sentencia="SELECT acc_hora FROM acciones WHERE acc_idsens=".$idsens."";
+  $stmt = mysqli_prepare($mysqli,$sentencia);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_store_result($stmt);
+  mysqli_stmt_bind_result($stmt,$target);
+  mysqli_stmt_fetch($stmt);
+  printf("Error: %s.\n", mysqli_stmt_error($stmt));
+  $do = empty($target);
+  return [$do, $target];
+  mysqli_stmt_close($stmt);     
   mysqli_close($mysqli);
 }
 function getflag($idsens){
