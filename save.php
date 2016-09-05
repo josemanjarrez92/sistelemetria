@@ -12,6 +12,7 @@
       }
       else{
 	  include 'includes/configuracion.php';
+	  date_default_timezone_set('America/Bogota');
 	  if($_GET['valor']=='nan'){$_GET['valor']=0;}
 	  $sentencia = "INSERT INTO registros (reg_iduser,reg_idloc,reg_idsens,reg_valor,reg_fechahora) VALUES(".$_GET['iduser'].",".$_GET['idloc'].",".$_GET['idsens'].",".$_GET['valor'].",CURRENT_TIMESTAMP)";
 	  mysqli_query($mysqli,"SET SESSION time_zone = '-5:00'"); 
