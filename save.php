@@ -17,8 +17,42 @@
 	  $sentencia = "INSERT INTO registros (reg_iduser,reg_idloc,reg_idsens,reg_valor,reg_fechahora) VALUES(".$_GET['iduser'].",".$_GET['idloc'].",".$_GET['idsens'].",".$_GET['valor'].",CURRENT_TIMESTAMP)";
 	  mysqli_query($mysqli,"SET SESSION time_zone = '-5:00'"); 
 	  $res = mysqli_query($mysqli,$sentencia);
-	  echo strftime("%H", time());
+	  $now = strftime("%H", time());
+	  $target = getTarget($_GET['idsens']);
+	  if($target[0]){if($now==$target[1]){$flag=getflag($_GET['idsens']);if($flag==0){echo "HIGH";setflag($_GET['idsens'],1);}else{echo "FALSE";}}else{setflag($_GET['idsens'],1);echo "FALSE";}}else{echo "FALSE";}
 	  }
     }
   }
+function getTarget($idsens){
+  include 'includes/configuracion.php';
+  $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
+  $sentencia="SELECT acc_hora FROM acciones WHERE acc_idsens=".$idsens."";
+  $stmt = mysqli_prepare($mysqli,$sentencia);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_store_result($stmt);
+  mysqli_stmt_bind_result($stmt,$target);
+  $do = mysqli_stmt_fetch($stmt);
+  mysqli_stmt_close($stmt);     
+  mysqli_close($mysqli);
+  return [$do, $target];
+}
+function getflag($idsens){
+  include 'includes/configuracion.php';
+  $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
+  $sentencia="SELECT acc_flag FROM acciones WHERE acc_idsens=".$idsens."";
+  $stmt = mysqli_prepare($mysqli,$sentencia);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_store_result($stmt);
+  mysqli_stmt_bind_result($stmt,$flag);
+  mysqli_stmt_fetch($stmt);
+  mysqli_stmt_close($stmt);     
+  mysqli_close($mysqli);
+  return $flag;
+}
+function setflag($idsens,$valor){
+  include 'includes/configuracion.php';
+  $mysqli=mysqli_connect($db_host,$db_user ,$db_password,$db_schema); 
+  $sentencia="UPDATE acciones SET acc_flag=".$valor." WHERE acc_idsens=".$idsens."";
+  $res = mysqli_query($mysqli,$sentencia);
+}
 ?>
