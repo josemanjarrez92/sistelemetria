@@ -440,7 +440,7 @@ function unidades($idtipo){
 		  data.addRows([
 		    <?php 
 					    for ($j = 0; $j < $num_reg; $j++) {
-						    echo "[new Date(". $years[$j].",".$months[$j]-1 .",".$days[$j].",".$hours[$j].",".$minutes[$j].",0), ". $valores[$j]."], ";
+						    echo "[new Date(". $years[$j].",".$months[$j]+1 .",".$days[$j].",".$hours[$j].",".$minutes[$j].",0), ". $valores[$j]."], ";
 					    } 
 					    
 			      ?>
