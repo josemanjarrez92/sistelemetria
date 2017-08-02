@@ -1,4 +1,5 @@
 <?php
+echo "welcome";
   if(!empty($_GET['x']) && !empty($_GET['y']) && !empty($_GET['z'])){
   echo "primer if";
     if(isset($_GET['x']) && isset($_GET['y']) && isset($_GET['z'])){
@@ -11,6 +12,4 @@
 	  if($res){echo "llego el vale";}
 	  }
     }
-  }
-
 ?>
