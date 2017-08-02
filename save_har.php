@@ -1,6 +1,8 @@
 <?php
   if(!empty($_GET['x']) && !empty($_GET['y']) && !empty($_GET['z'])){
+  echo "primer if";
     if(isset($_GET['x']) && isset($_GET['y']) && isset($_GET['z'])){
+    echo "segundo if";
 	  include 'includes/configuracion_har.php';
 	  date_default_timezone_set('America/Bogota');
 	  $sentencia = "INSERT INTO acelerometro (x,y,z,t) VALUES(".$_GET['x'].",".$_GET['y'].",".$_GET['z'].",CURRENT_TIMESTAMP)";
