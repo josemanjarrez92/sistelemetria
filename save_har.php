@@ -7,7 +7,7 @@
 	  include 'includes/configuracion_har.php';
 	  date_default_timezone_set('America/Bogota');
 	  $sentencia = "INSERT INTO acelerometro (x,y,z,t) VALUES(".$_GET['x'].",".$_GET['y'].",".$_GET['z'].",CURRENT_TIMESTAMP)";
-	  mysqli_query($mysqli,"SET SESSION time_zone = '-5:00'"); 
+	  mysqli_query($mysqli,"SET time_zone = '-05:00'"); 
 	  $res = mysqli_query($mysqli,$sentencia);
 	  if($res){echo "llego";}
 	  }
